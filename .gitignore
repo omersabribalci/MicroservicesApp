@@ -1,1 +1,5 @@
-docker-compose.yml
+mode_modules
+npm-debug.log
+.env
+.env.docker
+.git
