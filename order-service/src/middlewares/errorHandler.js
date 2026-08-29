@@ -3,6 +3,10 @@ const ApiResponse = require("../utils/apiResponse");
 const errorHandler = (error, req, res, _next) => {
   console.error(`[HATA] ${error.message}`);
 
+  if (error.statusCode) {
+    return ApiResponse.error(res, error.message, error.statusCode);
+  }
+
   if (error.name === "ValidationError") {
     const validationErrors = Object.values(error.errors).map(
       (err) => err.message,

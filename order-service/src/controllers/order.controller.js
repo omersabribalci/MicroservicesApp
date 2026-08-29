@@ -4,11 +4,13 @@ const userServiceClient = require("../services/userServiceClient");
 
 const enrichOrderWithUser = async (order) => {
   const orderObject = order.toObject();
-  const user = await userServiceClient.getUserById(order.userId);
+  const user = await userServiceClient.getUserById(order.userId, {
+    useFallbackOnFailure: true,
+  });
 
   return {
     ...orderObject,
-    user: user || { message: "Kullanıcı bilgisi alınamadı" },
+    user: user || { message: "Kullanıcı bilgisi geçici olarak alınamadı" },
   };
 };
 
@@ -68,10 +70,7 @@ const createOrder = async (req, res, next) => {
 
     const user = await userServiceClient.getUserById(userId);
     if (!user) {
-      return ApiResponse.badRequest(
-        res,
-        "Geçersiz kullanıcı ID veya User Service erişilemez durumda",
-      );
+      return ApiResponse.badRequest(res, "Geçersiz kullanıcı ID");
     }
 
     const order = await Order.create({ userId, product, quantity, totalPrice });
