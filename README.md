@@ -1,6 +1,6 @@
 # Microservices App
 
-This project contains a simple Node.js microservices application with an API gateway, user service, order service, and product service.
+This project was created for learning microservice architecture and Docker usage in a simple Node.js application with an API gateway, user service, order service, and product service.
 
 ## Services
 
